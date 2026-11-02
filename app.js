@@ -16,11 +16,11 @@ const BASE_URL = "https://lldev.thespacedevs.com/2.3.0";
 function getUpcomingLaunches(callback) {
   // TODO: Implement XHR GET request
   const xmlrequest = new XMLHttpRequest()
-  xmlrequest.open("GET", BASE_URL+"/launches/upcoming/")
+  xmlrequest.open("GET", BASE_URL + "/launches/upcoming/")
 
-  xmlrequest.onload = function() {
-    if (xmlrequest.readyState == 4){
-      if (xmlrequest.status == 200){
+  xmlrequest.onload = function () {
+    if (xmlrequest.readyState == 4) {
+      if (xmlrequest.status == 200) {
         const data = JSON.parse(xmlrequest.responseText)
         console.log(data)
         callback(data.results)
@@ -39,7 +39,7 @@ function populateDropdown(launches) {
   launches.forEach((launch) => {
     option = document.createElement("option")
     option.innerText = launch.name
-    option.value = launch.id 
+    option.value = launch.id
     dropdown = document.getElementById("launchDropdown")
     dropdown.appendChild(option)
   })
@@ -51,6 +51,9 @@ function populateDropdown(launches) {
 document.getElementById("launchDropdown").addEventListener("change", function () {
   // TODO: Get selected launchId
   // TODO: Call getLaunchDetails
+  launchId = document.getElementById("launchDropdown").value
+  console.log(launchId)
+  getLaunchDetails(launchId, displayLaunchInfo)
 });
 
 // Step 4: Create getLaunchDetails(launchId, callback)
@@ -58,6 +61,20 @@ document.getElementById("launchDropdown").addEventListener("change", function ()
 // - Parses the response and passes the launch object to the callback
 function getLaunchDetails(launchId, callback) {
   // TODO: Implement XHR GET request for a single launch
+  const xhr = new XMLHttpRequest()
+  xhr.open("GET", BASE_URL + "/launches/" + launchId + "/")
+
+  xhr.onload = function () {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        const data = JSON.parse(xhr.responseText)
+        console.log(data)
+        callback(data)
+      }
+    }
+  }
+
+  xhr.send()
 }
 
 // Step 5: Create displayLaunchInfo(launch)
