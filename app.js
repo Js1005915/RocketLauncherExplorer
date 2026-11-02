@@ -84,6 +84,40 @@ function getLaunchDetails(launchId, callback) {
 function displayLaunchInfo(launch) {
   // TODO: Display mission name and description
   // TODO: Display the rocket image
+  missionDetails = document.getElementById("missionDetails")
+  rocket = document.getElementById("rocket")
+
+  missionDetails.replaceChildren()
+  rocket.replaceChildren()
+
+  header = document.createElement("h1")
+  desc = document.createElement("p")
+
+  header.textContent = launch.name
+
+  if (launch.mission && launch.mission.description){
+    desc.textContent = launch.mission.description
+  }
+  else{
+    desc.textContent = "No description provided"
+  }
+  missionDetails.appendChild(header)
+  missionDetails.appendChild(desc)
+
+  if (launch.rocket.configuration && launch.rocket.configuration.image){
+    rocketImg = document.createElement("img")
+    rocketImg.src = launch.rocket.configuration.image.image_url
+    rocketImg.alt = launch.rocket.configuration.image.name
+
+    rocket.appendChild(rocketImg)
+  }
+  else {
+    noImg = document.createElement("p")
+    noImg.textContent = "There is no image provided"
+    
+    rocket.appendChild(noImg)
+  }
+
 }
 
 // Final step: kick off the flow
