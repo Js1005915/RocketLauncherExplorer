@@ -95,16 +95,16 @@ function displayLaunchInfo(launch) {
 
   header.textContent = launch.name
 
-  if (launch.mission && launch.mission.description){
+  if (launch.mission && launch.mission.description) {
     desc.textContent = launch.mission.description
   }
-  else{
+  else {
     desc.textContent = "No description provided"
   }
   missionDetails.appendChild(header)
   missionDetails.appendChild(desc)
 
-  if (launch.rocket.configuration && launch.rocket.configuration.image){
+  if (launch.rocket.configuration && launch.rocket.configuration.image) {
     rocketImg = document.createElement("img")
     rocketImg.src = launch.rocket.configuration.image.image_url
     rocketImg.alt = launch.rocket.configuration.image.name
@@ -114,7 +114,7 @@ function displayLaunchInfo(launch) {
   else {
     noImg = document.createElement("p")
     noImg.textContent = "There is no image provided"
-    
+
     rocket.appendChild(noImg)
   }
 
@@ -130,3 +130,43 @@ getUpcomingLaunches(populateDropdown);
 // - Show "Loading..." in #status while a request is pending
 // - Show a clear error message in #status when a request fails
 // - Clear the status message when data arrives
+
+
+axios.get(BASE_URL + "/launches/upcoming/")
+  .then(function (response) {
+
+  })
+  .catch(function (error) {
+
+  })
+
+function getUpcomingLaunches(callback) {
+
+
+  axios.get(BASE_URL + "/launches/upcoming/")
+    .then(function (response) {
+      callback(response.data.results)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+
+
+}
+
+function getLaunchDetails(launchId, callback) {
+
+
+  axios.get(BASE_URL + "/launches/" + launchId + "/")
+    .then(function (response) {
+      console.log(response)
+      callback(response.data)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+}
+
+
+  
+
