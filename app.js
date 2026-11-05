@@ -132,22 +132,18 @@ getUpcomingLaunches(populateDropdown);
 // - Clear the status message when data arrives
 
 
-axios.get(BASE_URL + "/launches/upcoming/")
-  .then(function (response) {
-
-  })
-  .catch(function (error) {
-
-  })
 
 function getUpcomingLaunches(callback) {
 
-
+  statusbox = document.getElementById("status")
+  statusbox.textContent = "Loading..."
   axios.get(BASE_URL + "/launches/upcoming/")
     .then(function (response) {
+      statusbox.textContent = ""
       callback(response.data.results)
     })
     .catch(function (error) {
+      statusbox.textContent = ("Error occured: ",error)
       console.log(error)
     })
 
@@ -155,14 +151,17 @@ function getUpcomingLaunches(callback) {
 }
 
 function getLaunchDetails(launchId, callback) {
-
+  statusbox = document.getElementById("status")
+  statusbox.textContent = "Loading..."
 
   axios.get(BASE_URL + "/launches/" + launchId + "/")
     .then(function (response) {
       console.log(response)
+      statusbox.textContent = ""
       callback(response.data)
     })
     .catch(function (error) {
+      statusbox.textContent = ("Error occured: ", error)
       console.log(error)
     })
 }
